@@ -1,6 +1,46 @@
+# paper profiler
+
+Really dumb profiling for NodeJS
+
+## Example
+
+```javascript
+var express = require( 'express' );
+var profile = require( 'paper-profile' ).create();
+var fs = require( 'fs' );
+var path = require( 'path' );
+var service = require( './service' );
+
+var app = express();
+
+app.get( '/', function( req, res, next ) {
+    var reqId = req.get( 'X-request-id' );
+    profile( reqId, 'getInfo' );
+
+    server.getInfo( function( err, data ) {
+        if ( err ) {
+            res.send( 500 );
+            return;
+        }
+        profile( reqId, 'getInfo' );
+
+        profile( reqId, 'writeToFile' );
+        fs.writeFileSync( path.join( __dirname, 'path', 'to', 'file' ), JSON.stringify( data ), 'utf8' );
+        profile( reqId, 'writeToFile' );
+
+        console.log( 'TIMES', profile.getTimes( reqId ) );
+        res.send( data );
+    });
+
+});
+
+app.listen( 8080, function() {
+    console.log( 'Server started up' );
+});
 ```
-   ___  ___   ___  _______    ___  ___  ____  __________   _______
-  / _ \/ _ | / _ \/ __/ _ \  / _ \/ _ \/ __ \/ __/  _/ /  / __/ _ \
- / ___/ __ |/ ___/ _// , _/ / ___/ , _/ /_/ / _/_/ // /__/ _// , _/
-/_/  /_/ |_/_/  /___/_/|_| /_/  /_/|_|\____/_/ /___/____/___/_/|_|
+
+Standard out might look like:
+
+```
+TIMES [{"name":"getInfo","elapsedTime":"0.51s"},{"name":"writeToFile","elapsedTime":"1.32s"}]
 ```
