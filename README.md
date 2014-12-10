@@ -28,7 +28,7 @@ app.get( '/', function( req, res, next ) {
         fs.writeFileSync( path.join( __dirname, 'path', 'to', 'file' ), JSON.stringify( data ), 'utf8' );
         profile( reqId, 'writeToFile' );
 
-        console.log( 'TIMES', profile.getTimes( reqId ) );
+        console.log( 'Times', profile.getTimes( reqId ) );
         res.send( data );
     });
 
@@ -42,5 +42,6 @@ app.listen( 8080, function() {
 Standard out might look like:
 
 ```
-TIMES [{"name":"getInfo","elapsedTime":"0.51s"},{"name":"writeToFile","elapsedTime":"1.32s"}]
+Server started up
+Times [{"name":"getInfo","elapsedTime":"0.51s"},{"name":"writeToFile","elapsedTime":"1.32s"}]
 ```
