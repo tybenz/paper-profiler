@@ -42,6 +42,8 @@ var Profiler = {
             return prof;
         };
 
+        profile.getTime = get;
+
         return profile;
     }
 };
