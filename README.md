@@ -29,6 +29,7 @@ app.get( '/', function( req, res, next ) {
         profile( reqId, 'writeToFile' );
 
         console.log( 'Times', profile.getTimes( reqId ) );
+        profile.done( reqId );
         res.send( data );
     });
 

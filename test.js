@@ -1,7 +1,7 @@
 var Profiler = require( './' );
 var assert = require( 'assert' );
 
-describe( 'paper profiler', function( done ) {
+describe( 'paper profiler', function() {
     describe( 'create', function() {
         it( 'should create a new set of functions and profiles object', function( done ) {
             var profile = Profiler.create();
@@ -11,7 +11,7 @@ describe( 'paper profiler', function( done ) {
         });
     });
 
-    describe( 'profile', function( done ) {
+    describe( 'profile', function() {
         it( 'should profile stuff', function( done ) {
             var profile = Profiler.create();
 
@@ -43,5 +43,20 @@ describe( 'paper profiler', function( done ) {
             assert( profile.getTimes( 1 ).length === 3 );
             done();
         });
+    });
+
+    describe( 'done', function() {
+        it( 'should empty the profile list for an id', function( done ) {
+            profile = Profiler.create();
+
+            profile( 1, 'foobar' );
+            profile( 1, 'foobar' );
+
+            profile.done( 1 );
+
+            assert( profile.getTimes( 1 ) === undefined );
+            done();
+        });
+
     });
 });
